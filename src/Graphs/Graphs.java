@@ -6,6 +6,8 @@ import java.util.*;
 public class Graphs {
     public static void main(String[] args) {
 
+
+
     }
 
     public boolean isInside(int[][] rooms, int row, int col){
@@ -186,6 +188,7 @@ class Graph{
         return true;
     }
 
+
     private boolean validaTreeDFS(int curr, int parent, HashMap<Integer, List<Integer>> graph, boolean[] visited) {
         if(visited[curr]) return false;
 
@@ -196,6 +199,97 @@ class Graph{
         }
         return true;
     }
+
+
+    public void findBridge(int root, HashMap<Integer, List<Integer>> graph, boolean[] visited,
+                           int[] discovery, int[] low, int[] parent, int[] time, List<int[]> bridges ){
+        visited[root] = true;
+
+        time[0] += 1;
+        discovery[root] = time[0];
+        low[root] = time[0];
+
+        Iterator<Integer> i = graph.get(root).iterator();
+
+        while (i.hasNext()){
+            int v = i.next();
+            if(!visited[v]){
+                parent[v] = root;
+                findBridge(v, graph, visited, discovery, low, parent, time, bridges);
+                low[root] = Math.min(low[root], low[v]);
+                if(low[v] > discovery[root]){
+                    bridges.add(new int[]{root, v});
+                }
+            }
+            else if(v != parent[root]){
+                low[root] = Math.min(low[root], discovery[v]);
+            }
+        }
+        return;
+    }
+
+    public int countNodeDFS(int start, HashMap<Integer, List<Integer>> graph, HashSet<Integer> visited){
+        int nodes = 0;
+        if(!visited.contains(start)){
+            Stack<Integer> stack = new Stack<>();
+            stack.add(start);
+            while (!stack.isEmpty()){
+                int vertex = stack.pop();
+                nodes += 1;
+                visited.add(vertex);
+                Iterator<Integer> i = graph.get(vertex).iterator();
+                while (i.hasNext()){
+                    int node = i.next();
+                    if(!visited.contains(node)) stack.add(node);
+                }
+            }
+        }
+        return nodes;
+
+    }
+
+    public int special_sol(int N, int M, int[][] Edg){
+        HashMap<Integer, List<Integer>> graph = new HashMap<>();
+        for(int i=0; i<N; i++) graph.put(i, new ArrayList<>());
+        for(int[] edge : Edg){
+            graph.get(edge[0]-1).add(edge[1]-1);
+            graph.get(edge[1]-1).add(edge[0]-1);
+        }
+        boolean[] visited = new boolean[N];
+        int[] discovery = new int[N];
+        int[] low = new int[N];
+        int[] parent = new int[N];
+        int[] time = new int[]{0};
+        for(int i=0; i<N; i++) parent[i] = -1;
+        List<int[]> bridges = new ArrayList<>();
+        for(int i=0; i<N; i++){
+            if(!visited[i]){
+                findBridge(i, graph, visited, discovery, low, parent, time, bridges);
+            }
+        }
+        for(int[] bridge : bridges){
+            int ind;
+            ind = graph.get(bridge[0]).indexOf(bridge[1]);
+            graph.get(bridge[0]).remove(ind);
+
+            ind = graph.get(bridge[1]).indexOf(bridge[0]);
+            graph.get(bridge[1]).remove(ind);
+        }
+
+        HashSet<Integer> vsited = new HashSet<>();
+        List<Integer> nodes_in_component = new ArrayList<>();
+        for(int i=0; i<N; i++){
+            if(!vsited.contains(i)){
+                nodes_in_component.add(countNodeDFS(i, graph, vsited));
+            }
+        }
+        int special_val = 1;
+        for(int nodes : nodes_in_component) special_val *= nodes;
+        return special_val;
+    }
+
+
+
 
 }
 
@@ -234,6 +328,7 @@ class DoublyLinkedList<T> {
         if(node.nextNode != null && node.prevNode != null){
             node.nextNode.prevNode = node.prevNode;
             node.prevNode.nextNode = node.nextNode;
+            this.size -= 1;
         }
         else if (node.nextNode == null && node.prevNode != null){
             deleteAtTail();
@@ -315,7 +410,7 @@ class DoublyLinkedList<T> {
             tailNode = null;
         else
             headNode.prevNode = null;
-        size--;
+        size -= 1;
     }
     public void deleteAtTail() {
         if (isEmpty())
@@ -325,6 +420,6 @@ class DoublyLinkedList<T> {
             headNode = null;
         else
             tailNode.nextNode = null;
-        size--;
+        size -= 1;
     }
 }

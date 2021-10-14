@@ -18,6 +18,7 @@ public class LinkedLists {
 
     public static void main(String[] args) {
 
+
     }
 
     public boolean hasCycle(ListNode head) {
@@ -33,4 +34,54 @@ public class LinkedLists {
         }
         return false;
     }
+}
+
+class DoublyLinkedList<T>{
+    class ListNode{
+        T data;
+        ListNode next;
+        ListNode prev;
+
+        public ListNode(T data){
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    ListNode head;
+    ListNode tail;
+    int size;
+
+    public DoublyLinkedList(){
+        this.head = null;
+        this.tail = null;
+    }
+
+
+
+
+    public void setHead(ListNode node){
+        if (this.head == null) {
+            this.tail = node;
+        }
+        else{
+            node.next = this.head;
+        }
+        this.head = node;
+        this.size += 1;
+    }
+
+    public void setTail(ListNode node){
+        if(this.tail == null){
+            this.head = node;
+        }
+        this.tail = node;
+        this.size  += 1;
+    }
+
+    public int size(){
+        return this.size;
+    }
+
 }
