@@ -1,13 +1,46 @@
 package BitManipulation;
 
+import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Scanner;
+import java.io.IOException;
 
 public class BitManipulation {
+    public static final int END = Integer.MAX_VALUE;
+    public static final int START = END - 100;
+
+    public static boolean b(){
+        return false;
+    }
+
     public static void main(String[] args) {
-        int num = 167;
-        System.out.println(intToBin(num));
+        /* int count = 0;
+        System.out.println(START + " "+ END);
+        for(int i=START; i<=END; i++){
+            System.out.println(i);
+            count++;
+            if(count > 100) return;
+        }
+        System.out.println(count); */
+
+        final String pig = "length: 100";
+        final String dog = "length: "+pig.length();
+        boolean t = pig == dog;
+        System.out.println("Hello : " + b());
+
+        /*try {
+            System.out.println("Hello World.");
+        }
+        catch (IOException e){
+            System.out.println("Error");
+        }
+        catch (Exception e){
+            System.out.println("E");
+        }*/
+
     }
     public static ArrayList<Integer> intToBin(int val){
         ArrayList<Integer> binary = new ArrayList<>();

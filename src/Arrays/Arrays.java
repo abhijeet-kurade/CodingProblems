@@ -63,5 +63,38 @@ public class Arrays {
         return index+1;
     }
 
+    public int maxAbsDiff(int[] arr){
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int num : arr){
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
+        return Math.abs(max - min);
+    }
+
+    public int smallestMissingNumber(int[] arr){
+        int len = arr.length;
+
+        for(int i=0; i<len; i++){
+            if(arr[i] <= 0) arr[i] = len + 1;
+        }
+
+        for(int i=0; i<len; i++){
+            if(arr[i] <= len){
+                if(arr[arr[i]] > 0){
+                    arr[arr[i]] = arr[arr[i]] * -1;
+                }
+            }
+        }
+
+        for(int i=0; i<len; i++){
+            if(arr[i] < 0) return i+1;
+        }
+        return len;
+
+
+    }
+
 
 }
