@@ -4,6 +4,45 @@ import java.util.*;
 public class Arrays {
     public static void main(String[] args) {
 
+        int count = 1;
+        int j = 0;
+        for (int i = 0; i < 5; i++) {
+            for (; j < 5; j++) {
+                System.out.println(count);
+                count++;
+            }
+        }
+    }
+    public class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+    }
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
+
+        int start = newInterval.start;
+        int end = newInterval.end;
+        ArrayList<Interval> newIntervals = new ArrayList<>();
+        boolean startPlaced = false;
+        for (Interval interval : intervals) {
+            if(!startPlaced && start > interval.end){
+                newIntervals.add(interval);
+            }
+            else if(start > interval.end){
+                startPlaced = true;
+            }
+
+        }
+        return newIntervals;
     }
 
     public int[] intersection(int[] nums1, int[] nums2){
@@ -44,7 +83,6 @@ public class Arrays {
 
         return output;
     }
-
     public int removeDuplicates(int[] nums) {
         int n = nums.length;
         if(n==0) return 0;
@@ -64,7 +102,7 @@ public class Arrays {
     }
 
     public int maxAbsDiff(int[] arr){
-        int min = Integer.MAX_VALUE;
+        int min  = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         for(int num : arr){
             min = Math.min(min, num);
@@ -88,9 +126,6 @@ public class Arrays {
             }
         }
 
-        for(int i=0; i<len; i++){
-            if(arr[i] < 0) return i+1;
-        }
         return len;
 
 
