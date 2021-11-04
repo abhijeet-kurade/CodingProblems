@@ -127,9 +127,13 @@ public class ArrayOne {
 
     public ArrayList<Interval> mergeIntervals(ArrayList<Interval> intervals, Interval newInterval){
         int len = intervals.size();
+        boolean inserted = false;
         for(int i=0; i<len; i++)
-            if(newInterval.start <= intervals.get(i).start)
+            if(newInterval.start <= intervals.get(i).start){
                 intervals.add(i, newInterval);
+                inserted = true;
+            }
+        if(!inserted) intervals.add(newInterval);
 
         ArrayList<Interval> newIntervals = new ArrayList<>();
 
