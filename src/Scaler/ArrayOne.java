@@ -14,8 +14,6 @@ public class ArrayOne {
         System.out.println(minMaxSubArray(list));
 
     }
-
-
     public int maxArr1(ArrayList<Integer> A) { // Time : O(n^2) Space : O(1)
         int len = A.size();
         int max_diff = 0;
@@ -57,8 +55,6 @@ public class ArrayOne {
 
         return max_diff;
     }
-
-
     public int maxArr2(ArrayList<Integer> A) { // Time : O(n) Space : O(1)
         int max_diff = 0;
         int len = A.size();
@@ -76,7 +72,6 @@ public class ArrayOne {
         max_diff = Math.max(max_diff, maxTwo - minTwo);
         return max_diff;
     }
-
     public static int minMaxSubArray(ArrayList<Integer> A) { // Time : O(n) Space : O(1)
         int len = A.size();
         int min = Collections.min(A);
@@ -97,7 +92,6 @@ public class ArrayOne {
         }
         return length == Integer.MAX_VALUE ? 1 : length ;
     }
-
     public static int minMaxSubArray1(ArrayList<Integer> A) { // Time : O(n) Space : O(1)
         int len = A.size();
         int min = Integer.MAX_VALUE;
@@ -118,4 +112,44 @@ public class ArrayOne {
     }
 
 
+    class Interval{
+        int start;
+        int end;
+        public Interval(){
+            this.start = 0;
+            this.end = 0;
+        }
+        public Interval(int start, int end){
+            this.start = start;
+            this.end = end;
+        }
     }
+
+    public ArrayList<Interval> mergeIntervals(ArrayList<Interval> intervals, Interval newInterval){
+        int len = intervals.size();
+        for(int i=0; i<len; i++)
+            if(newInterval.start <= intervals.get(i).start)
+                intervals.add(i, newInterval);
+
+        ArrayList<Interval> newIntervals = new ArrayList<>();
+
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+        for(int i =1; i<len; i++){
+            int currStart = intervals.get(i).start;
+            int currEnd = intervals.get(i).end;
+            if(end < currStart){
+                newIntervals.add(new Interval(start, end));
+                start = currStart;
+                end = currEnd;
+            }
+            else{
+                end = Math.max(end, currEnd);
+            }
+        }
+        newIntervals.add(new Interval(start, end));
+        return newIntervals;
+    }
+
+
+}
