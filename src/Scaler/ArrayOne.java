@@ -11,6 +11,7 @@ public class ArrayOne {
 
         ArrayList<Integer> list = new ArrayList<>();
         for(int num : arr) list.add(num);
+
         System.out.println(minMaxSubArray(list));
 
     }
