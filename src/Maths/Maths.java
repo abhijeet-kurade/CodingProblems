@@ -14,7 +14,7 @@ class RandomPick {
     Random rand;
     public RandomPick(int[] w) {
         this.weights = w;
-        intial_pref_sum(w);
+        initial_pref_sum(w);
         rand = new Random();
     }
 
@@ -47,7 +47,7 @@ class RandomPick {
         return index;
     }
 
-    public void intial_pref_sum(int[] w){
+    public void initial_pref_sum(int[] w){
         int len = w.length;
         this.prefSum = new int[len];
         this.sum = 0;
