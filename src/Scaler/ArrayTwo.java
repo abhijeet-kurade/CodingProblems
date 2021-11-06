@@ -15,8 +15,8 @@ public class ArrayTwo {
 }
 
 class SubMatrixSums{
-    private int[][] arr;
-    private long[][] prefix;
+    private final int[][] arr;
+    private final long[][] prefix;
     private final long M = 1000000007;
     public SubMatrixSums(int[][] arr){
         this.arr = arr;
@@ -40,7 +40,6 @@ class SubMatrixSums{
         int len = B.length;
         int[] sums = new int[len];
         for(int i=0; i<len; i++){
-
             int x1 = B[i] - 1;
             int y1 = C[i] - 1;
             int x2 = D[i] - 1;
@@ -56,6 +55,19 @@ class SubMatrixSums{
             sum %= M;
             sums[i] = (int)sum;
         }
+        return sums;
+    }
+
+    public int sumsSubMatrix(int x1, int y1, int x2, int y2){
+        long sum = this.prefix[x2][y2] -
+                ( (x1 <= 0 ? 0 : this.prefix[x1-1][y2]) + (y1 <= 0 ? 0 : this.prefix[x2][y1-1]) ) +
+                (x1==0 || y1==0 ? 0 : this.prefix[x1-1][y1-1]) ;
+        System.out.println(sum);
+        while(sum < 0){
+            sum += M;
+        }
+        sum %= M;
+        int sums = (int)sum;
         return sums;
     }
 }
