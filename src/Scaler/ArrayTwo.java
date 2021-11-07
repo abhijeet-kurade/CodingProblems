@@ -1,14 +1,23 @@
 package Scaler;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.*;
 
 public class ArrayTwo {
     public static void main(String[] args) {
-        int[] arr = {5, 17, 100, 11};
-        minimumSwaps(arr, 20);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] A = new int[n];
+        for(int i=0; i<n; i++){
+            A[i] = sc.nextInt();
+        }
+        int shift = sc.nextInt();
+        for(int i=0; i<n; i++){
+            int index = i - shift;
+            while(index < 0) index += n;
+            index %= n;
+            System.out.println(index);
+            System.out.print(A[index] + " ");
+        }
     }
 
     public static void printArr(int[] arr){
@@ -122,6 +131,27 @@ public class ArrayTwo {
             set.add(num);
         }
         return 0;
+    }
+
+    public int odEvenSubSequence(int[] A){
+        int n = A.length;
+        int length = 1;
+        int seq = A[0] % 2;
+        for(int i=1; i<n; i++){
+            if(seq == 0){
+                if(A[i] % 2 == 1){
+                    seq = A[i] % 2;
+                    length += 1;
+                }
+            }
+            else{
+                if(A[i] % 2 == 0){
+                    seq = A[i] % 2;
+                    length += 1;
+                }
+            }
+        }
+        return length;
     }
 
 }

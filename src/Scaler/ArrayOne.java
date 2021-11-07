@@ -6,14 +6,14 @@ import java.util.*;
 public class ArrayOne {
 
     public static void main(String[] args) {
-        int i = 31;
-
-        System.out.print((i>>5) & 1);
-        System.out.print((i>>4) & 1);
-        System.out.print((i>>3) & 1);
-        System.out.print((i>>2) & 1);
-        System.out.print((i>>1) & 1);
-        System.out.print((i>>0) & 1);
+        int[][] A = {
+                {1, 2, 3, 31},
+                {4, 5, 6, 61},
+                {7, 8, 9, 91},
+                {7, 8, 9, 91}
+        };
+        int[] a = {-9, -1, -1, -4, -8, -2, -2, -8};
+        missingNumbers(a);
     }
     public int maxArr1(ArrayList<Integer> A) { // Time : O(n^2) Space : O(1)
         int len = A.size();
@@ -180,6 +180,107 @@ public class ArrayOne {
         merged.add(new Interval(start, end));
         return merged;
     }
+
+    public void mulOfPrevNext(int[] A){
+        int n = A.length;
+        if(n <= 1) return;
+        int prev = A[0];
+        for(int i=0; i<n; i++){
+            int next = i == n-1 ? A[n-1] : A[i+1];
+            int mul = prev * next;
+            prev = A[i];
+            A[i] = mul;
+        }
+        return;
+    }
+
+    public int[][] multipleLeftRotations(int[] A, int[] B){
+        int rotations = B.length;
+        int n = A.length;
+        int[][] rotated = new int[rotations][n];
+        for(int i=0; i<rotations; i++){
+            for(int j=0; j<n; j++){
+                rotated[i][j] = A[(j+B[i])%n];
+            }
+        }
+        return rotated;
+    }
+
+
+    public static int[][] antiDiagonal(int[][] A) {
+        int n = A.length;
+        int[][] m = new int[2*n-1][n];
+        int i = 0, j =0;
+        int d = 0, idx = 0;
+        char dir = 'H';
+        int chg1 = 0, chg2 =0;
+        while(0<=i && i<n && 0<=j && j<n){
+            m[d][idx] = A[i][j];
+            System.out.print(A[i][j] + " ");
+            if(dir=='H'){
+                if(i==n-1 && j==0){
+                    dir = 'V';
+                    i = ++chg2;
+                    j = n-1;
+                    d += 1;
+                    idx = 0;
+                }
+                else if(j == 0){
+                    i += 0;
+                    j = ++chg1;
+                    d += 1;
+                    idx = 0;
+                }
+                else {
+                    i += 1;
+                    j -= 1;
+                    idx += 1;
+                }
+            }
+            else{
+                if(i == n-1 && j == n-1) break;
+                else if(i == n-1){
+                    j = n-1;
+                    i = ++chg2;
+                    d += 1;
+                    idx = 0;
+                }
+                else{
+                     i += 1;
+                     j -= 1;
+                    idx += 1;
+                }
+
+            }
+
+        }
+        return m;
+    }
+
+    public static int[] missingNumbers(int[] A){
+        int n = A.length;
+        if(n == 0) return A;
+        int i=0;
+        while(i < n){
+            if(A[i] == i+1 || (A[i] <= 0 || n < A[i])  || A[A[i] - 1] == A[i]) {
+                i += 1;
+                continue;
+            }
+            int temp = A[A[i] -1];
+            A[A[i] - 1] = A[i];
+            A[i] = temp;
+        }
+        int count = 0;
+        for(i=0; i<n; i++){
+            if(A[i] != i+1) count += 1;
+        }
+        int[] missing = new int[count];
+        int idx = 0;
+        for(i=0; i<n; i++)  if(A[i] != i+1) missing[idx++] = i+1;
+        for(int num : missing) System.out.print(num + " ");
+        return missing;
+    }
+
 
 
     class Interval{
