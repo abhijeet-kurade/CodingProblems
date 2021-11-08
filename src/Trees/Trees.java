@@ -17,10 +17,11 @@ public class Trees {
     }
 
     public static void main(String[] args) {
-        System.out.println("Trees");
-        TreeNode root = new TreeNode(2);
-        root.left = new TreeNode(1);
-        System.out.println(closestValueIterative(root, 2147483647.0));
+
+        String s = "0123435";
+        String [] lst = s.split("3");
+        for(String ss : lst ) System.out.println(ss);
+        //System.out.println(s.substring(0, 2));
     }
 
     public static int closestValueRecursive(TreeNode node, double target) {

@@ -3,7 +3,7 @@ package Scaler;
 import java.util.*;
 
 public class ArrayTwo {
-    public static void main(String[] args) {
+    static public  void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int[] A = new int[n];

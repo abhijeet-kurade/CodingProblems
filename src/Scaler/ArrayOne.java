@@ -12,8 +12,34 @@ public class ArrayOne {
                 {7, 8, 9, 91},
                 {7, 8, 9, 91}
         };
-        int[] a = {-9, -1, -1, -4, -8, -2, -2, -8};
-        missingNumbers(a);
+        HashSet<String> set = new HashSet<>();
+        generateAllBString(set, 5, "");
+        System.out.println(set);
+    }
+
+    public static void generateAllBString(HashSet<String> set, int size, String str){
+        if(str.length() == size) {
+            set.add(str);
+            return;
+        }
+        generateAllBString(set, size, str+"0");
+        generateAllBString(set, size, str+"1");
+
+    }
+    public String findDifferentBinaryString(String[] A) {
+        int n = (int)Math.pow(2, A[0].length());
+        HashSet<String> set = new HashSet<>();
+        for(String str : A) set.add(str);
+
+        for(int i=0; i<n; i++){
+            String b = "";
+            for(int j=0; j<A[0].length(); j++){
+                int c = ((i>>j) & 1);
+                b = c + b;
+            }
+            if(!set.contains(b)) return b;
+        }
+        return "";
     }
     public int maxArr1(ArrayList<Integer> A) { // Time : O(n^2) Space : O(1)
         int len = A.size();
@@ -271,12 +297,10 @@ public class ArrayOne {
             A[i] = temp;
         }
         int count = 0;
-        for(i=0; i<n; i++){
-            if(A[i] != i+1) count += 1;
-        }
+        for(i=0; i<n; i++) if(A[i] != i+1) count += 1;
         int[] missing = new int[count];
         int idx = 0;
-        for(i=0; i<n; i++)  if(A[i] != i+1) missing[idx++] = i+1;
+        for(i=0; i<n; i++) if(A[i] != i+1) missing[idx++] = i+1;
         for(int num : missing) System.out.print(num + " ");
         return missing;
     }
